@@ -149,103 +149,76 @@ bool ConnectGame::PlacePiece(std::string userInput, ConnectGame::Player player) 
 	return true;
 }
 
-bool ConnectGame::CheckDiagonal(ConnectGame::Player player) {
+bool ConnectGame::CheckDiagonal(ConnectGame::Player player, int row, int column) {
+	
 	bool diagonalFound = false;
+	int k;
+	int rightDiag = 1;
+	int leftDiag = 1;
 
-	int i, j, k;
-	int rightDiag = 0;
-	int leftDiag = 0;
-	int maxRightDiag = 1;
-	int maxLeftDiag = 1;
-
-	for (i = this->numRows - 1; i > -1; --i) {
-		for (j = 0; j < this->numCols; ++j) {
-			if (this->gameBoard.at(i).at(j) == player) {
-
-				int rightDiag = 1;
-				int leftDiag = 1;
-
-				for (k = 1; (i - k > -1) && (j + k < this->numCols); ++k) {
-					if (this->gameBoard.at(i - k).at(j + k) == player) {
-						++rightDiag;
-						if (maxRightDiag < rightDiag) {
-							maxRightDiag = rightDiag;
-						}
-					}
-					else {
-						rightDiag = 0;
-					}
-					if (maxRightDiag == this->numToWin) {
-						diagonalFound = true;
-						return diagonalFound;
-					}
-				}
-
-				for (k = 1; (i - k > -1) && (j - k > -1); ++k) {
-					if (this->gameBoard.at(i - k).at(j - k) == player) {
-						++leftDiag;
-						if (maxLeftDiag < leftDiag) {
-							maxLeftDiag = leftDiag;
-						}
-					}
-					else {
-						leftDiag = 0;
-					}
-					if (maxLeftDiag == this->numToWin) {
-						diagonalFound = true;
-						return diagonalFound;
-					}
-				}
-
-			}
+	for (k = 1; (row - k > -1) && (column + k < this->numCols); ++k) {
+		if (this->gameBoard.at(row - k).at(column + k) == player) {
+			++rightDiag;
+		}
+		else {
+			return diagonalFound;
+		}
+		if (rightDiag == this->numToWin) {
+			return diagonalFound = true;
 		}
 	}
-	
+
+	for (k = 1; (row - k > -1) && (column - k > -1); ++k) {
+		if (this->gameBoard.at(row - k).at(column - k) == player) {
+			++leftDiag;
+		}
+		else {
+			return diagonalFound;
+		}
+		if (leftDiag == this->numToWin) {
+			return diagonalFound = true;
+		}
+	}
+
 	return diagonalFound;
 }
 
-bool ConnectGame::CheckRow(ConnectGame::Player player) {
+bool ConnectGame::CheckRow(ConnectGame::Player player, int row, int column) {
 	
-	bool rowFound = false;
-	int rowsConsec = 0;
+	bool sequenceFound = false;
+	int sequenceLength = 1;
 
-	for (int c = 0; c < this->numCols; ++c) {
-		for (int r = this->numRows - 1; r > -1; --r) {
-			if (gameBoard[r][c] == player) {
-				++rowsConsec;
-			}
-			if (rowsConsec == this->numToWin) {
-				rowFound = true;
-				break;
-			}
-			if (gameBoard[r][c] != player) {
-				rowsConsec = 0;
-			}
+	for (int i = column + 1; i < this->numCols; ++i) {
+		if (this->gameBoard.at(row).at(i) == player) {
+			++sequenceLength;
+		}
+		else {
+			return sequenceFound;
+		}
+		if (sequenceLength == this->numToWin) {
+			return sequenceFound = true;
 		}
 	}
-	
-	return rowFound;
+
+	return sequenceFound;
 }
 
-bool ConnectGame::CheckColumn(ConnectGame::Player player) {
+bool ConnectGame::CheckColumn(ConnectGame::Player player, int row, int column) {
 	
-	bool columnFound = false;
-	int colsConsec = 0;
+	bool sequenceFound = false;
+	int sequenceLength = 1;
 
-	for (int r = numRows - 1; r > -1; --r) {
-		for (int c = 0; c < numCols; ++c) {
-			if (gameBoard[r][c] == player) {
-				++colsConsec;
-			}
-			if (colsConsec == numToWin) {
-				columnFound = true;
-				return columnFound;
-			}
-			if (gameBoard[r][c] != player) {
-				colsConsec = 0;
-			}
+	for (int i = row + 1; i < this->numRows; ++i) {
+		if (this->gameBoard.at(i).at(column) == player) {
+			++sequenceLength;
+		}
+		else {
+			return sequenceFound;
+		}
+		if (sequenceLength == this->numToWin) {
+			return sequenceFound = true;
 		}
 	}
-	
-	return columnFound;
+
+	return sequenceFound;
 }

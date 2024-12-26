@@ -1,7 +1,7 @@
 #include <vector>
 #include <string>
 
-#define VERSION "1.0"
+#define VERSION "1.0.1"
 
 class ConnectGame {
 	public:
