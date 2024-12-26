@@ -86,24 +86,32 @@ void ConnectGame::PlayerTurn(ConnectGame::Player player) {
 bool ConnectGame::GameWon(ConnectGame::Player player) {
 
 	bool sequenceFound = false;
+	int i, j;
 
 	if (player == ConnectGame::Player::None) {
 		return sequenceFound;
 	}
 
-	if (CheckRow(player)) {
-		sequenceFound = true;
-		return sequenceFound;
-	}
+	for (i = this->numRows - 1; i > -1; --i) {
+		for (j = 0; j < this->numCols; ++j) {
+			if (this->gameBoard.at(i).at(j) == player) {
 
-	if (CheckColumn(player)) {
-		sequenceFound = true;
-		return sequenceFound;
-	}
+				if (CheckRow(player, i, j)) {
+					sequenceFound = true;
+					return sequenceFound;
+				}
 
-	if (CheckDiagonal(player)) {
-		sequenceFound = true;
-		return sequenceFound;
+				if (CheckColumn(player, i, j)) {
+					sequenceFound = true;
+					return sequenceFound;
+				}
+
+				if (CheckDiagonal(player, i, j)) {
+					sequenceFound = true;
+					return sequenceFound;
+				}
+			}
+		}
 	}
 
 	return sequenceFound;
