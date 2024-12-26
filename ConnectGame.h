@@ -21,7 +21,7 @@ class ConnectGame {
 		int numToWin;
 		bool PlacePiece(std::string userInput, ConnectGame::Player player);
 		std::vector<std::vector<int>> gameBoard;
-		bool CheckDiagonal(ConnectGame::Player player);
-		bool CheckRow(ConnectGame::Player player);
-		bool CheckColumn(ConnectGame::Player player);
+		bool CheckDiagonal(ConnectGame::Player player, int row, int column);
+		bool CheckRow(ConnectGame::Player player, int row, int column);
+		bool CheckColumn(ConnectGame::Player player, int row, int column);
 };
