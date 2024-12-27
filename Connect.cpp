@@ -11,12 +11,15 @@ void PrintUsage() {
 int main(int argc, char* argv[])
 {
 
-	int numCol = 1;
-	int numRow = 1;
-	int numToWin = -1;
+	int numCol = 8;
+	int numRow = 8;
+	int numToWin = 4;
+
+	if (argc == 1) {
+		ConnectGame Game();
+	}
 
 	for (int i = 1; i < argc; i = i + 2) {
-
 
 		if (strcmp(argv[i], "-c") == 0) {
 			numCol = atoi(argv[i + 1]);
