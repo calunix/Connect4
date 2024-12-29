@@ -84,7 +84,7 @@ void ConnectGame::PlayerTurn(ConnectGame::Player player) {
 }
 
 bool ConnectGame::GameWon(ConnectGame::Player player) {
-
+	 
 	bool sequenceFound = false;
 	int i, j;
 
@@ -161,19 +161,22 @@ bool ConnectGame::CheckDiagonal(ConnectGame::Player player, int row, int column)
 			++rightDiag;
 		}
 		else {
-			return diagonalFound;
+			break;
 		}
 		if (rightDiag == this->numToWin) {
 			return diagonalFound = true;
 		}
 	}
 
+	//std::cout << "Diagonal start - i:  " << row << " j: " << column << std::endl;
 	for (k = 1; (row - k > -1) && (column - k > -1); ++k) {
+		
 		if (this->gameBoard.at(row - k).at(column - k) == player) {
 			++leftDiag;
+			//std::cout << "Next element - i:  " << row - k << " j: " << column - k << std::endl;
 		}
 		else {
-			return diagonalFound;
+			break;
 		}
 		if (leftDiag == this->numToWin) {
 			return diagonalFound = true;

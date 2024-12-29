@@ -16,6 +16,7 @@ int main(int argc, char* argv[])
 	int numToWin = 4;
 
 	if (argc == 1) {
+		std::cout << "numToWin: " << numToWin << std::endl;
 		ConnectGame Game();
 	}
 
